@@ -1,0 +1,3 @@
+rootProject.name = 'MoodojiUI'
+
+include ':app'
