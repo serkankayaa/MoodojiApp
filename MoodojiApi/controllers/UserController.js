@@ -35,7 +35,7 @@ module.exports = {
         });
     },
 
-    //Get Users Group
+    //Get All User
     GetAllUser: (req, res) => {
         UserModel.find({}, function(err, allUser) {
             if (!err){
