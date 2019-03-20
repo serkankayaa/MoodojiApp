@@ -1,16 +1,14 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,SafeAreaView} from 'react-native';
+import {StyleSheet,SafeAreaView} from 'react-native';
 import OfflineNotice from './app/networkConnection';
-
+import ReadContacts from './app/readContacts';
 
 export default class App extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-    <OfflineNotice/>
-    <View>
-      <Text>Hello APP</Text>
-    </View>
+         <OfflineNotice/>
+         <ReadContacts/>        
     </SafeAreaView>
     );
   }
@@ -19,8 +17,6 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
   welcome: {
@@ -28,9 +24,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+   centerContainer : {
+     flex:1,
+     justifyContent:'center',
+     alignItems : 'center'
+   }
 });

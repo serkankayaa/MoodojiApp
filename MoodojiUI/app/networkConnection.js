@@ -22,7 +22,6 @@ class OfflineNotice extends PureComponent {
         this.setState({isConnected});
     });
 }
- 
 
   componentDidMount() {
     NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivityChange);
@@ -52,8 +51,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     width,
-    position: 'absolute',
-    top: 30
   },
   offlineText: { color: '#fff' }
 });
