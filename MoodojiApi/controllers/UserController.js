@@ -8,11 +8,11 @@ module.exports = {
         const phoneNumber = req.body.phone_number;
         const moodId = req.body.mood_id;
         
-        UserModel.findOne({ user_name: userName}, function(err, data) {
+        UserModel.findOne({ user_name: userName}, (err, data) => {
             var user = new UserModel({
                 contact_name: contactName,
                 user_name: userName,
-                phone_number: phoneNumber,
+                phone_number: phoneNumber,  
                 mood_Id: moodId,
             });
 
@@ -37,7 +37,7 @@ module.exports = {
 
     //Get All User
     GetAllUser: (req, res) => {
-        UserModel.find({}, function(err, allUser) {
+        UserModel.find({},(err, allUser) => {
             if (!err){
                 if(allUser.length == 0){
                     res.send("No data found");
@@ -55,14 +55,14 @@ module.exports = {
     GetUserData: (req, res, phoneNumbers) => {
         const phoneNumbersData = [];
 
-        UserModel.find({}, function(err, allUser) {
+        UserModel.find({}, (err, allUser) => {
             if (!err){
                 if(allUser.length == 0){
                     res.send("No data found");
                 }
               
               // Compare phone number in db and UI Contact Number
-              allUser.forEach(function(item, value){
+              allUser.forEach((item, value) => {
                 const iterator = phoneNumbers.values();
                 for (const phoneValue of iterator) {
                     if(item.phone_number == phoneValue){
@@ -71,7 +71,7 @@ module.exports = {
                   }
               });
 
-              UserModel.find({ phone_number: { $in: phoneNumbersData } }, function(err, userContacts){
+              UserModel.find({ phone_number: { $in: phoneNumbersData } }, (err, userContacts) => {
                 if(err != null){
                     console.log(err);
                     return res.status(400).json(err);                
@@ -88,14 +88,14 @@ module.exports = {
 
     //Delete all data
     DeleteAllData: () => {
-        UserModel.deleteMany( function(err) {
+        UserModel.deleteMany(err => {
             console.log("Deleted all data successfully");
         });
     },
 
     //To remove indexes
     DropIndexes: () => {
-        UserModel.collection.dropAllIndexes(function (err, results) {
+        UserModel.collection.dropAllIndexes((err, results) => {
             console.log("Dropped Indexes");
         });
     }
