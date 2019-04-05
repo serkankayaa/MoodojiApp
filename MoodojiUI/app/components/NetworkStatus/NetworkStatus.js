@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
-import { View, Text, NetInfo, Dimensions, StyleSheet } from 'react-native';
+import { View, Text, NetInfo } from 'react-native';
+import {styles} from './index';
 
-const { width } = Dimensions.get('window');
-
+//Check user has connection
 function MiniOfflineSign() {
   return (
     <View style={styles.offlineContainer}>
@@ -42,17 +42,5 @@ class OfflineNotice extends PureComponent {
     return null;
   }
 }
-
-const styles = StyleSheet.create({
-  offlineContainer: {
-    backgroundColor: '#efcf1c',
-    height: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    width,
-  },
-  offlineText: { color: '#fff' }
-});
 
 export default OfflineNotice;

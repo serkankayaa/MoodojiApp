@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
-import {StyleSheet,SafeAreaView} from 'react-native';
-import OfflineNotice from './app/networkConnection';
-import ReadContacts from './app/readContacts';
+import React, { Component } from "react";
+import { StyleSheet, SafeAreaView, View } from "react-native";
+import ReadContacts from "./app/components/ReadContact/ReadContact.js";
+import NetworkStatus from "./app/components/NetworkStatus/NetworkStatus.js";
 
 export default class App extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-         <OfflineNotice/>
-         <ReadContacts/>        
-    </SafeAreaView>
+        <NetworkStatus />
+        <ReadContacts />
+      </SafeAreaView>
     );
   }
 }
@@ -17,16 +17,7 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
+    backgroundColor: "#292B33"
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-   centerContainer : {
-     flex:1,
-     justifyContent:'center',
-     alignItems : 'center'
-   }
+
 });
