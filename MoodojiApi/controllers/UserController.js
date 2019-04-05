@@ -51,9 +51,16 @@ module.exports = {
         });
     },
 
+    // if(phoneValue.includes('+9')){
+    //     phoneValue = phoneValue.split('+9')[1];
+    // }
+
+    // phoneValue = phoneValue.replace(/\D/g,'');
+
     //Get Users Group
     GetUserData: (req, res, phoneNumbers) => {
         const phoneNumbersData = [];
+        phoneNumbers = phoneNumbers.map(String);
 
         UserModel.find({}, (err, allUser) => {
             if (!err){
@@ -61,17 +68,23 @@ module.exports = {
                     res.send("No data found");
                 }
               
+              var dbPhone = [];
+                
               // Compare phone number in db and UI Contact Number
               allUser.forEach((item, value) => {
-                const iterator = phoneNumbers.values();
+                dbPhone = item.phone_number;
+                dbPhone = dbPhone.toString();
+                const iterator = phoneNumbers;
                 for (const phoneValue of iterator) {
-                    if(item.phone_number == phoneValue){
-                        phoneNumbersData.push(item.phone_number);
+                    if(dbPhone == phoneValue){
+                        phoneNumbersData.push(dbPhone);
                     }
                   }
               });
 
-              UserModel.find({ phone_number: { $in: phoneNumbersData } }, (err, userContacts) => {
+              const checkData = phoneNumbersData.map(Number);
+
+              UserModel.find({ phone_number: { $in: checkData } }, (err, userContacts) => {
                 if(err != null){
                     console.log(err);
                     return res.status(400).json(err);                
