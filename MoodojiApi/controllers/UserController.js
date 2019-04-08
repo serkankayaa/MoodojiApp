@@ -3,14 +3,12 @@ const UserModel = require('../models/User');
 module.exports = {
     //Post User
     PostUser: (req, res) => {
-        const contactName = req.body.contact_name;
         const userName = req.body.user_name;
         const phoneNumber = req.body.phone_number;
         const moodId = req.body.mood_id;
         
         UserModel.findOne({ user_name: userName}, (err, data) => {
             var user = new UserModel({
-                contact_name: contactName,
                 user_name: userName,
                 phone_number: phoneNumber,  
                 mood_Id: moodId,
@@ -51,12 +49,6 @@ module.exports = {
         });
     },
 
-    // if(phoneValue.includes('+9')){
-    //     phoneValue = phoneValue.split('+9')[1];
-    // }
-
-    // phoneValue = phoneValue.replace(/\D/g,'');
-
     //Get Users Group
     GetUserData: (req, res, phoneNumbers) => {
         const phoneNumbersData = [];
@@ -75,7 +67,16 @@ module.exports = {
                 dbPhone = item.phone_number;
                 dbPhone = dbPhone.toString();
                 const iterator = phoneNumbers;
-                for (const phoneValue of iterator) {
+                for (const item of iterator) {
+                    var phoneValue = item.toString();
+                    if(phoneValue.includes('+9')){
+                        phoneValue = phoneValue.split('+9')[1];
+                    }
+                    if(phoneValue.startsWith('9')){
+                        phoneValue = phoneValue.substring(1);
+                    }
+                    console.log(phoneValue);
+                    phoneValue = phoneValue.replace(/\D/g,'');
                     if(dbPhone == phoneValue){
                         phoneNumbersData.push(dbPhone);
                     }
