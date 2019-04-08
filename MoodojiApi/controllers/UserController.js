@@ -39,6 +39,7 @@ module.exports = {
             if (!err){
                 if(allUser.length == 0){
                     res.send("No data found");
+                    return;
                 }
               
             res.send(allUser);
