@@ -1,4 +1,6 @@
 const UserModel = require('../models/User');
+const Hashids = require('hashids');
+const hashids = new Hashids();
 
 module.exports = {
     //Post User
@@ -6,11 +8,13 @@ module.exports = {
         const userName = req.body.user_name;
         const phoneNumber = req.body.phone_number;
         const moodId = req.body.mood_id;
+
+        const encodedPhone = hashids.encode(phoneNumber);
         
         UserModel.findOne({ user_name: userName}, (err, data) => {
             var user = new UserModel({
                 user_name: userName,
-                phone_number: phoneNumber,  
+                phone_number: encodedPhone,  
                 mood_Id: moodId,
             });
 
@@ -53,7 +57,6 @@ module.exports = {
     //Get Users Group
     GetUserData: (req, res, phoneNumbers) => {
         const phoneNumbersData = [];
-        phoneNumbers = phoneNumbers.map(String);
 
         UserModel.find({}, (err, allUser) => {
             if (!err){
@@ -66,27 +69,22 @@ module.exports = {
               // Compare phone number in db and UI Contact Number
               allUser.forEach((item, value) => {
                 dbPhone = item.phone_number;
+                const encodedPhone = dbPhone;
+                dbPhone = hashids.decode(dbPhone);
                 dbPhone = dbPhone.toString();
                 const iterator = phoneNumbers;
+
                 for (const item of iterator) {
-                    var phoneValue = item.toString();
-                    if(phoneValue.includes('+9')){
-                        phoneValue = phoneValue.split('+9')[1];
-                    }
-                    if(phoneValue.startsWith('9')){
-                        phoneValue = phoneValue.substring(1);
-                    }
-                    console.log(phoneValue);
-                    phoneValue = phoneValue.replace(/\D/g,'');
+                    var phoneValue = item;
+                    phoneValue = ChangeNumberFormat(phoneValue);
+
                     if(dbPhone == phoneValue){
-                        phoneNumbersData.push(dbPhone);
+                        phoneNumbersData.push(encodedPhone);
                     }
                   }
               });
 
-              const checkData = phoneNumbersData.map(Number);
-
-              UserModel.find({ phone_number: { $in: checkData } }, (err, userContacts) => {
+              UserModel.find({ phone_number: { $in: phoneNumbersData } }, (err, userContacts) => {
                 if(err != null){
                     console.log(err);
                     return res.status(400).json(err);                
@@ -114,4 +112,18 @@ module.exports = {
             console.log("Dropped Indexes");
         });
     }
+}
+
+function ChangeNumberFormat(item){
+    if(item.includes('+9')){
+        item = item.split('+9')[1];
+    }
+
+    if(item.startsWith('9')){
+        item = item.substring(1);
+    }
+
+    item = item.replace(/\D/g,'');
+
+    return item;
 }

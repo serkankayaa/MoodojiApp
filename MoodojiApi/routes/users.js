@@ -17,7 +17,7 @@ router.get('/getAllUser', (req, res) => {
 });
 
 router.get('/getUserGroup', (req, res) => {
-  var phoneNumbers = [+905302000000, 1, 2, +905656566, 6546565656, 3156326, 5369876532, 5372006569];
+  var phoneNumbers = ["5392059363", "5302512625", "1231231"];
   //Arayüzden gelecek telefon numara dizisi
   return UserController.GetUserData(req, res, phoneNumbers);
 });

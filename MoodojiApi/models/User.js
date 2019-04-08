@@ -12,7 +12,7 @@ var schema = new Schema({
         required: [true, 'User name is required']
     },
     phone_number: {
-        type: Schema.Types.Number,
+        type: Schema.Types.String,
         unique: true,
         required: [true, 'Phone number is required']
     },
