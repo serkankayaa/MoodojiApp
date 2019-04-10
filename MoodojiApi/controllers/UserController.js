@@ -10,31 +10,34 @@ module.exports = {
         const moodId = req.body.mood_id;
 
         const encodedPhone = hashids.encode(phoneNumber);
-        
-        UserModel.findOne({ user_name: userName}, (err, data) => {
-            var user = new UserModel({
-                user_name: userName,
-                phone_number: encodedPhone,  
-                mood_Id: moodId,
-            });
 
-            if(err){
-                return res.status(400).json(err);
-            }
-            
-            if(data != null){
-                res.send(userName + " has already saved");
-                return;
-            }
-            else{
-                user.save((userErr, userData) => {
-                    if(userErr) {
-                        return res.status(400).json(userErr);
-                    }
-                    return res.json({ userData });
-                });    
-            }
+        var user = new UserModel({
+            user_name: userName,
+            phone_number: encodedPhone,  
+            mood_Id: moodId,
         });
+        
+        UserModel.find( { $or:[ {'user_name' : userName}, {'phone_number' : encodedPhone }]}, function(err,data){
+                
+                if(Object.keys(data).length != 0){
+                    console.log(data);
+                    if(data[0].phone_number == encodedPhone){
+                        return res.end(hashids.decode(encodedPhone) + " number has already saved");
+                    }
+
+                    if(data[0].user_name == userName){
+                        return res.end(userName + " has already saved");
+                    }
+                }
+                else{
+                    user.save((userErr, userData) => {
+                        if(userErr) {
+                            return res.status(400).json(userErr);
+                        }
+                        return res.json({ userData });
+                    });
+                }
+            });  
     },
 
     //Get All User
