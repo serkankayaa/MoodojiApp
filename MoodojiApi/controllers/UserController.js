@@ -21,11 +21,11 @@ module.exports = {
                 
                 if(Object.keys(data).length != 0){
                     if(data[0].phone_number == encodedPhone){
-                        return res.status(400).end(hashids.decode(encodedPhone) + " number has already saved");
+                        return res.status(400).send(hashids.decode(encodedPhone) + " number has already saved");
                     }
 
                     if(data[0].user_name == userName){
-                        return res.status(400).end(userName + " has already saved");
+                        return res.status(400).send(userName + " has already saved");
                     }
                 }
                 else{
@@ -33,7 +33,7 @@ module.exports = {
                         if(userErr) {
                             return res.status(400).json(userErr);
                         }
-
+                        
                         return res.status(200).json({ userData });
                     });
                 }

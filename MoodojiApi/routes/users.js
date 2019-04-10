@@ -22,7 +22,7 @@ router.get('/getUserGroup', (req, res) => {
   return UserController.GetUserData(req, res, phoneNumbers);
 });
 
-router.get('/deleteAllData', () => {
+router.delete('/deleteAllData', () => {
   return UserController.DeleteAllData();
 });
 
