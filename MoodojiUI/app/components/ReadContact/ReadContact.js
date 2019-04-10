@@ -5,7 +5,7 @@ import Contacts from "react-native-contacts";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Input, Button } from "react-native-elements";
 
-import {API} from '../../config/index';
+import API from '../../config/index';
 import { styles } from "./index";
 
 //Read User Contacts
@@ -16,8 +16,8 @@ export default class ReadContact extends Component {
       hasPermission: false,
       data: [],
       phoneNums: [],
-      userPhone:" ",
-      userName: " "
+      userPhone:"",
+      userName: ""
     };
   }
 
@@ -79,7 +79,7 @@ export default class ReadContact extends Component {
       console.log(nextState);
       return true;
   }
-
+  //TO-DO Status text'e göre hatayı ekrana
   postUser(){
     console.log("Sending User data");
     axios.post(`${API}/postUser`,{
